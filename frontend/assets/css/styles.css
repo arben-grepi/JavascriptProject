@@ -1,0 +1,430 @@
+:root {
+  --colors-green: #006836;
+  --colors-green-dim: #00341b;
+  --colors-white: #ffff;
+  --colors-tableborder: #13a48c;
+  --colors-tablehighlight: #5ddd9f;
+}
+
+/* Yleiset muutokset */
+
+::selection {
+  background-color: var(--colors-green);
+  color: #fff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Open Sans", sans-serif;
+}
+
+.marginright {
+  margin-right: 10px;
+}
+
+.btn {
+  background-color: var(--colors-green);
+  border: 0px;
+}
+
+.btn:hover {
+  background-color: var(--colors-green-dim);
+}
+
+#minSizeToggle {
+  accent-color: var(--colors-green);
+}
+
+/* Komponenttien tai osien muokkaukset */
+
+.main-title {
+  font-weight: 600;
+  font-size: 2em;
+  padding-top: 40px;
+  color: var(--colors-green);
+}
+
+.grouptable {
+  border: 1px solid var(--bs-emphasis-color);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 10px;
+}
+
+.rowpadding {
+  padding-bottom: 20px;
+}
+
+/* Tiedoston lisäys alue */
+.upload-area {
+  border: 2px dashed #aaa;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.upload-container {
+  margin-bottom: 40px;
+}
+
+.upload-area p {
+  margin: 0;
+}
+
+#excel-file {
+  display: none;
+}
+
+/* Pöydät */
+.tabletus {
+  font-family: Arial, Helvetica, sans-serif !important;
+  width: 100% !important;
+  margin-bottom: 30px !important;
+}
+
+.tabletus table {
+  table-layout: fixed;
+  width: 80%;
+  border-collapse: collapse;
+  word-wrap: break-word;
+}
+
+.tabletus th {
+  border: 1px solid var(--colors-tablehighlight);
+  background-color: #e5e5e5;
+  font-size: 16px;
+  padding: 8px;
+}
+.tabletus td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  margin-right: 30px !important;
+}
+.tabletus tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.tabletus tr:hover {
+  background-color: var(--colors-tablehighlight);
+}
+
+.tabletus th:hover::after {
+  content: " ↑↓";
+}
+
+#groupTable th:hover::after {
+  content: "" !important;
+}
+
+/* Valintamenut */
+
+#selections {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0px 0px 30px 0px;
+}
+.selection-item {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+.selection-item label {
+  margin-bottom: 5px;
+}
+
+.selectiongroup {
+  flex-direction: column;
+  margin-right: 20px;
+  width: 200px;
+}
+
+/* Oikea puolisko kontrolleista */
+.controlbarright {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+#sizeSelect {
+  width: 260px;
+  margin-right: 20px;
+}
+
+.minSizeToggle {
+  display: flex;
+  align-items: end;
+  margin-right: 20px;
+}
+
+#attributeSelect {
+  margin-right: 10px;
+}
+
+.form-check-input:checked {
+  background-color: var(--colors-green);
+  border-color: var(--colors-green-dim);
+}
+
+/*Liittyy demoa varten luotuihin numerokenttiin*/
+.small-input {
+  width: 50px;
+}
+/*Liittyy demoa varten luotuihin numerokenttiin*/
+.number-input-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 700px;
+}
+
+/* Tooltipit */
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  font-size: medium;
+  cursor: help;
+  opacity: 1;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.filterLabel {
+  margin-bottom: 7px;
+}
+
+/* Apunäkymä */
+.helpBtn {
+  color: var(--colors-white);
+  background-color: var(--colors-green);
+  border: none;
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  font-size: 25px;
+}
+
+.helpBtn:active,
+.helpBtn:focus,
+.helpBtn.focus {
+  color: var(--colors-white) !important;
+  background-color: var(--colors-green-dim) !important;
+}
+
+.helpBtn:not(:hover) {
+  color: var(--colors-white) !important;
+  background-color: var(--colors-green) !important;
+}
+
+#helpWindow {
+  pointer-events: none;
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  opacity: 0;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 400px;
+  background-color: #fdfdfd;
+  border: 2px dashed var(--colors-green);
+  font-size: smaller;
+  border-radius: 4px;
+  padding: 10px;
+  padding-top: 30px;
+  margin-top: 60px;
+}
+
+#helpWindow.active {
+  pointer-events: all;
+  opacity: 1;
+}
+
+.close-icon {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  scale: 0.6;
+}
+
+/* Haku */
+.searchFilterItem {
+  display: none;
+}
+
+.searchFilterItemText {
+  visibility: hidden;
+}
+
+/* Järjestämättöneet */
+.unsortedTableContainer {
+  max-height: 80vh;
+  background-color: white;
+}
+
+.unsortedBox {
+  max-height: 90%;
+  width: 100%;
+}
+
+.unsortedBox td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  margin-right: 30px !important;
+  white-space: nowrap;
+}
+.unsortedBox tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.unsortedTable tr {
+  height: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.unsortedTable tr:hover {
+  background-color: var(--colors-tablehighlight);
+}
+
+.unsortedTable td {
+  padding: 5px;
+}
+.placeholder-row {
+  height: 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+  color: #888;
+}
+
+.draggable {
+  cursor: move;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  height: 20px;
+  justify-content: left;
+}
+
+.hidden-buttons {
+  display: none;
+  margin-left: 10px;
+}
+
+.hidden-buttons a,
+.expandButton {
+  display: inline-block;
+  margin: 0 5px;
+  text-decoration: none;
+  color: white;
+  background-color: var(--colors-green);
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  border: none;
+}
+
+.hidden-buttons a:hover,
+.expandButton:hover {
+  color: white;
+  background-color: var(--colors-green-dim);
+}
+
+.logoBtn {
+  background: transparent;
+  border: none;
+}
+
+.btn-danger {
+  margin-left: 20px;
+}
+
+#fileView div {
+  align-items: center;
+  display: flex;
+}
+
+#fileView div::before {
+  content: "";
+  background-image: url("/frontend/assets/icons/excel-icon.png");
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  margin-right: 7px;
+}
+
+.form-select:focus,
+.form-check-input:focus,
+.form-control:focus {
+  border-color: var(--colors-green);
+  box-shadow: 0 0 0 0.25rem rgba(0, 104, 54, 0.25) !important;
+}
+
+.form-check-input:checked:active {
+  background-color: white;
+  user-select: none;
+}
+
+.form-switch .form-check-input:not(:checked) {
+  --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='gray'/%3e%3c/svg%3e");
+}
+
+.form-switch .form-check-input:checked {
+  --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='white'/%3e%3c/svg%3e");
+}
+
+.sortedGroup td {
+  width: fit-content;
+  min-width: 120px;
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+#rightColumn {
+  display: none;
+  height: fit-content;
+  padding-bottom: 40px;
+  padding-right: 10px;
+}
+
+#helpWindow {
+  z-index: 999;
+}
+
+#sizeSelect:invalid {
+  border: red solid 3px;
+}

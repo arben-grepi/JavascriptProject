@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>Ryhmäytymistyökalu</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+  </head>
+
+  <!-- Body -->
+  <body>
+    <!-- Otsikko -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <button class="logoBtn" id="logoBtn">
+            <img src="assets\applogo.svg" height="125px"/>
+          </button>
+        </div>
+      </div>
+
+      <div class="buttonContainer mt-4 mb-2">
+        <button id="expandButton" class="expandButton">Kyselypohjat</button>
+        <div id="hiddenButtons" class="hidden-buttons">
+          <a
+            href="https://forms.office.com/Pages/ShareFormPage.aspx?id=UxyQaYa34UmlPsh2rWKkJNMLRH80CN9KoEIbHAhAkSxUOEdYQkpSNTc4NVpSRVg0TEtaTjVORVBGRi4u&sharetoken=BFk67kydSmtr0NsrGLTK"
+            target="_blank"
+            >Scrum-kysely</a
+          >
+          <a
+            href="https://forms.office.com/Pages/ShareFormPage.aspx?id=UxyQaYa34UmlPsh2rWKkJNMLRH80CN9KoEIbHAhAkSxUMzREVUVDVURVVEhYWlFSTDRZVEY0NklXTy4u&sharetoken=ftUwAkCGHr0MZsyg4aQt"
+            target="_blank"
+            >Belbin-kysely</a
+          >
+          <a
+            href="https://forms.office.com/Pages/ShareFormPage.aspx?id=UxyQaYa34UmlPsh2rWKkJNMLRH80CN9KoEIbHAhAkSxURTE3MEY5SzNJNzdPREJPOUVQU0RLRjY5WC4u&sharetoken=X51M7ptHqvhnixmiZXbH"
+            target="_blank"
+            >Luo oma</a
+          >
+        </div>
+      </div>
+
+      <!-- Upload container -->
+      <div class="container mt-4">
+        <div class="card upload-container" id="upload-container">
+          <div class="card-body">
+            <div class="upload-area" id="upload-area">
+              <p class="text-center mb-3">Raahaa excel tähän</p>
+              <p class="text-center mb-3">tai</p>
+              <div class="text-center">
+                <input
+                  type="file"
+                  id="excel-file"
+                  accept=".xlsx"
+                  class="form-control"
+                  multiple
+                />
+                <label for="excel-file" class="btn btn-primary btn-block mt-2"
+                  >Selaa tiedostoja</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+            <!-- Lisätyt tiedostot -->
+            <div id="fileContainer" class="container mt-6" style="visibility: hidden">
+              <label>Ladatut tiedostot</label>
+              <fieldset id="fileView" class="rounded border p-2"></fieldset>
+            </div>
+
+      <!-- Valintalaatikot, ryhmäkoko sekä luo ryhmä -->
+      <div class="container mt-4">
+        <div
+          class="controlbar d-flex align-items-center justify-content-between"
+        >
+          <div class="selectiongroup">
+            <label class="tooltip filterLabel" for="segSlt">Yhteinen
+              <span class="tooltiptext">
+                Jakaa opiskelijat ryhmiin, jossa valittu vaihtoehto on samanlainen ryhmän jäsenillä.
+              </span>
+            </label>
+            <select id="segSlt" class="form-select">
+              <option>Tyhjä</option>
+            </select>
+          </div>
+          <div class="selectiongroup">
+            <label class="tooltip filterLabel" for="orderSlt">Erilaiset
+              <span class="tooltiptext">
+                Jakaa opiskelijat ryhmiin, jossa valittu vaihtoehto on erilainen ryhmän jäsenillä.
+            </label>
+            <select id="orderSlt" class="form-select">
+              <option>Tyhjä</option>
+            </select>
+          </div>
+          <div class="controlbarright">
+            <div class="form-check form-switch align-self-center me-4">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="minSizeToggle"
+              />
+              <label class="form-check-label tooltip" for="minSizeToggle"
+                >Minimikoko
+                <span class="tooltiptext">
+                  Valittuna jakaa opiskelijat ryhmiin siten, että ryhmien
+                  minimikoko on käyttäjän syöttämä ryhmäkoko. Luo muutaman
+                  suuremman ryhmän, jos opiskelijat eivät jakaudu tasan.
+                </span>
+              </label>
+            </div>
+            <input
+              id="sizeSelect"
+              type="number"
+              pattern="[2-9]"
+              class="form-control"
+              placeholder="Syötä toivottu ryhmäkoko"
+              min="2"
+            />
+            <button id="groupBtn" class="btn btn-primary">Luo ryhmät</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Haku ja filteröinti -->
+      <div class="container">
+        <div class="row mt-4">
+          <div class="col">
+            <div class="filterstudents">
+              <div class="row gx-0">
+                <div class="col searchFilterItemText" id="searchFilterItemText">
+                  <label class="tooltip">Suodatus
+                    <span class="tooltiptext">
+                      Suodattaa opiskelijat valitun sarakkeen mukaan ja käyttämällä hakusanaa.
+                  </label>
+                </div>
+                <div
+                  class="col-sm-6 d-flex align-items-end justify-content-end"
+                >
+                  <button
+                    id="printExcelBtn"
+                    class="btn btn-primary"
+                    type="button"
+                  >
+                    Tulosta Excelinä
+                  </button>
+                </div>
+              </div>
+              <div class="row gx-0 searchFilterItem" id="searchFilterItem">
+                <div class="col-sm-3 me-3">
+                  <select id="attributeSelect" class="form-select mb-2">
+                    <!-- Optionit generoidaan dynaamisesti JavaScriptissä -->
+                  </select>
+                </div>
+                <div class="col-sm-3">
+                  <input
+                    id="searchTermInput"
+                    type="text"
+                    placeholder="Syötä hakusana"
+                    class="form-control mb-2"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opiskelijalista sekä lajittelemattomat -->
+      <div class="container">
+        <!-- opiskelijaLista ennen jakoa -->
+        <div class="tabletus" id="previewTable"></div>
+      </div>
+      <button class="helpBtn btn" id="helpButton">?</button>
+      <div class="container mt-5">
+        <div id="helpWindow" class="card shadow">
+            <div class="rounded card-body">
+                <h4 class="card-title">Ryhmäytymistyökalu</h4>
+                <p class="card-text">
+                    Tämä työkalu jakaa opiskelijat ryhmiin käyttäjän valitsemien
+                    kriteerien perusteella. Ryhmät luodaan excel-tiedostosta, joka
+                    sisältää opiskelijoiden tiedot. Lajitteluperusteet valitaan
+                    alasvetolaatikoista ja ryhmäkoko sekä minimikoko asetetaan käyttäjän
+                    toiveiden mukaan.
+                </p>
+
+                <h4 class="mt-4">Ohjeet</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <strong>1.</strong> Raahaa peppi- tai kyselytiedosto excel-tiedostona tai valitse
+                        tiedosto. Voit myös syöttää molemmat tiedostot, jolloin tiedot
+                        yhdistetään ja vastaamatta jättäneet näkyvät lajittelemattomina.
+                    </li>
+                    <li class="mb-2">
+                        <strong>2.</strong> Valitse alasvetolaatikoista kriteerit ryhmien lajittelulle.
+                        (Valinnainen)
+                    </li>
+                    <li class="mb-2">
+                        <strong>3.</strong> Aseta ryhmäkoko ja valitse halutessasi minimikoko. Lopuksi paina
+                        "Luo ryhmät" -nappia.
+                    </li>
+                    <li class="mb-2">
+                        <strong>4.</strong> Voit muokata ryhmiä raahaamalla ja pudottamalla.
+                    </li>
+                    <li>
+                        <strong>5.</strong> Voit tulostaa ryhmät Excel-tiedostona painamalla "Tulosta Excelinä"
+                        -nappia.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  </div> </div> </div>
+  
+  <div class="container">
+    <div class="row">
+      <!-- Vasen kolumni jossa kaikki lajitellut taulut -->
+      <div class="col-md-8">
+          <div class="tabletus" id="groupTable">
+            <!-- Scripti luo tähän taulut -->
+          </div>
+          <div class="tabletus" id="otherTable">
+            <!-- Scripti luo tähän taulut -->
+          </div>
+      </div>
+      <!-- Lajittelemattomat oikealla -->
+      <div class="col-md-4 border rounded mb-3  position-sticky top-0"  id="rightColumn">
+    
+          <div class="unsortedBox p-2 pt-4" id="unsortedBox">
+            <h4>Lajittelemattomat opiskelijat</h4>
+            <p>
+              Tässä näet opiskelijat, joita ei ole jaettu ryhmiin, sekä
+              opiskelijat, jotka eivät ole vastanneet kyselyyn.
+            </p>
+            <div class="unsortedTableContainer overflow-y-auto overflow-x-auto border-bottom" id="unsortedTableContainer">
+            <table
+              id="unsortedTable"
+              class="unsortedTable table table-bordered margin-right-10"
+            ></table>
+          </div>
+          </div>
+          
+          </div>
+   
+      </div>
+    </div>
+  </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="components/app.js" type="module"></script>
+  </body>
+</html>
