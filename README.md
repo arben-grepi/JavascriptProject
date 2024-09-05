@@ -5,7 +5,9 @@ Installation:
 - `npm install`
 - `npm install express`
 
-The application runs on a server at: [ryhmiin.guidesoft.fi](https://ryhmiin.guidesoft.fi)
+The application runs on a server at: https://ryhmiin.guidesoft.fi
+
+You can see an introduction (in Finnish) to the tool at https://www.youtube.com/watch?v=nz7iTxuvaNE.
 
 *About the tool:*
 
